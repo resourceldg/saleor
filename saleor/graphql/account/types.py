@@ -13,7 +13,7 @@ from ..checkout.types import Checkout
 from ..core.connection import CountableDjangoObjectType
 from ..core.fields import PrefetchingConnectionField
 from ..core.resolvers import resolve_meta, resolve_private_meta
-from ..core.types import CountryDisplay, Image, MetadataObjectType, PermissionDisplay
+from ..core.types import CountryDisplay, Image, ObjectWithMetadata, PermissionDisplay
 from ..core.utils import get_node_optimized
 from ..decorators import one_of_permissions_required
 from ..utils import format_permissions_for_display
@@ -179,7 +179,7 @@ class ServiceAccountToken(CountableDjangoObjectType):
 
 
 @key(fields="id")
-class ServiceAccount(MetadataObjectType, CountableDjangoObjectType):
+class ServiceAccount(CountableDjangoObjectType):
     permissions = graphene.List(
         PermissionDisplay, description="List of the service's permissions."
     )
@@ -197,7 +197,7 @@ class ServiceAccount(MetadataObjectType, CountableDjangoObjectType):
 
     class Meta:
         description = "Represents service account data."
-        interfaces = [relay.Node]
+        interfaces = [relay.Node, ObjectWithMetadata]
         model = models.ServiceAccount
         permissions = (AccountPermissions.MANAGE_SERVICE_ACCOUNTS,)
         only_fields = [
@@ -232,7 +232,7 @@ class ServiceAccount(MetadataObjectType, CountableDjangoObjectType):
 
 @key("id")
 @key("email")
-class User(MetadataObjectType, CountableDjangoObjectType):
+class User(CountableDjangoObjectType):
     addresses = gql_optimizer.field(
         graphene.List(Address, description="List of all user's addresses."),
         model_field="addresses",
@@ -272,7 +272,7 @@ class User(MetadataObjectType, CountableDjangoObjectType):
 
     class Meta:
         description = "Represents user data."
-        interfaces = [relay.Node]
+        interfaces = [relay.Node, ObjectWithMetadata]
         model = get_user_model()
         only_fields = [
             "date_joined",
