@@ -29,13 +29,7 @@ from ....product.utils.attributes import (
     generate_name_for_variant,
 )
 from ....warehouse.management import set_stock_quantity
-from ...core.mutations import (
-    BaseMutation,
-    ClearMetaBaseMutation,
-    ModelDeleteMutation,
-    ModelMutation,
-    UpdateMetaBaseMutation,
-)
+from ...core.mutations import BaseMutation, ModelDeleteMutation, ModelMutation
 from ...core.scalars import Decimal, WeightScalar
 from ...core.types import SeoInput, Upload
 from ...core.types.common import ProductError
@@ -45,6 +39,7 @@ from ...core.utils import (
     validate_image_file,
 )
 from ...core.utils.reordering import perform_reordering
+from ...meta.mutations import ClearMetaBaseMutation, UpdateMetaBaseMutation
 from ..types import (
     Category,
     Collection,
