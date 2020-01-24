@@ -8,6 +8,7 @@ from ..enums import (
     ExtensionsErrorCode,
     GiftCardErrorCode,
     MenuErrorCode,
+    MetaErrorCode,
     OrderErrorCode,
     PaymentErrorCode,
     PermissionEnum,
@@ -52,6 +53,10 @@ class CheckoutError(Error):
 
 class MenuError(Error):
     code = MenuErrorCode(description="The error code.")
+
+
+class MetaError(Error):
+    code = MetaErrorCode(description="The error code.")
 
 
 class OrderError(Error):

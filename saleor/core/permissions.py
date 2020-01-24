@@ -1,6 +1,8 @@
 from enum import Enum
+from typing import Dict, List
 
 from django.contrib.auth.models import Permission
+from django.db import models
 
 
 class BasePermissionEnum(Enum):
@@ -108,3 +110,19 @@ def get_permissions(permissions=None):
         .prefetch_related("content_type")
         .order_by("codename")
     )
+
+
+def get_permissions_codename_enum_dict() -> Dict[str, BasePermissionEnum]:
+    permissions_dict = {}
+    for permission_enum in PERMISSIONS_ENUMS:
+        for enum in permission_enum:
+            permissions_dict[enum.codename] = enum
+    return permissions_dict
+
+
+def get_permissions_for_model(model: models.Model) -> List[BasePermissionEnum]:
+    permissions_codename_enum_dict = get_permissions_codename_enum_dict()
+    return [
+        permissions_codename_enum_dict[permission[0]]
+        for permission in model._meta.permissions
+    ]
