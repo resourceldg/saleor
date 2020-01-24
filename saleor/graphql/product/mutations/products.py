@@ -39,7 +39,7 @@ from ...core.utils import (
     validate_image_file,
 )
 from ...core.utils.reordering import perform_reordering
-from ...meta.mutations import ClearMetaBaseMutation, UpdateMetaBaseMutation
+from ...meta.deprecated.mutations import ClearMetaBaseMutation, UpdateMetaBaseMutation
 from ..types import (
     Category,
     Collection,
